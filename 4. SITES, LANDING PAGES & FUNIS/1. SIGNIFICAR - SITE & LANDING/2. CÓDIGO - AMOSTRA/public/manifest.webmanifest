@@ -1,0 +1,18 @@
+{
+  "name": "Clínica Ressignificar",
+  "short_name": "Ressignificar",
+  "description": "Psicologia, corpo, natureza e ancestralidade em diálogo.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f2ea",
+  "theme_color": "#31473a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

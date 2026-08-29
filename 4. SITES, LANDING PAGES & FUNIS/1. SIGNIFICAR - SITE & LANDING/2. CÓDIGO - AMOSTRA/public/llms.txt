@@ -1,0 +1,22 @@
+# Clínica Ressignificar
+
+> Clínica de psicologia que integra escuta clínica, corpo, natureza e ancestralidade em processos de autoconhecimento. Atendimento presencial e online; jornadas em grupo no Vale Sagrado dos Incas.
+
+## Páginas principais
+- https://ressignificar.example/ — visão geral da clínica
+- https://ressignificar.example/a-clinica/ — posicionamento e essência
+- https://ressignificar.example/abordagem/ — psicologia, corpo, natureza e ancestralidade em diálogo
+- https://ressignificar.example/atendimento/ — atendimento psicológico presencial e online
+- https://ressignificar.example/jornadas/ — jornadas Ressignificar no Peru
+- https://ressignificar.example/experiencias/ — corpo, respiração, fotografia e recursos simbólicos
+- https://ressignificar.example/profissionais/ — equipe profissional (dados finais serão publicados após validação)
+- https://ressignificar.example/conteudos/ — conteúdos educativos
+- https://ressignificar.example/contato/ — primeiro contato
+
+## Diretrizes editoriais
+- Linguagem acolhedora, profunda, sensorial e direta.
+- Sem promessas de cura, resultados garantidos ou soluções rápidas.
+- Conteúdo institucional e educativo; não substitui avaliação psicológica individual.
+
+## Observação técnica
+Este arquivo é um índice complementar legível por máquinas. Não substitui sitemap.xml, robots.txt, HTML semântico ou dados estruturados.

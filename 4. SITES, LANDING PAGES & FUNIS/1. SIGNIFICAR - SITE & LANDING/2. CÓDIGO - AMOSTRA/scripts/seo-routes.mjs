@@ -1,0 +1,16 @@
+export const seoRoutes = [
+  '/',
+  '/a-clinica',
+  '/abordagem',
+  '/atendimento',
+  '/jornadas',
+  '/experiencias',
+  '/profissionais',
+  '/conteudos',
+  '/area-de-membros',
+  '/contato',
+  '/privacidade',
+  '/termos',
+  '/mapa-do-site',
+  '/landing',
+]

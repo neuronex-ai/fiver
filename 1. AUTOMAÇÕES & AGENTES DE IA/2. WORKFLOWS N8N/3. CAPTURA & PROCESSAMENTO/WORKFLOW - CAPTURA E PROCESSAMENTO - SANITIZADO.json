@@ -1,0 +1,346 @@
+{
+  "name": "My workflow 2 (Mar 19 at 10:52:54)",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "POV Video",
+        "formDescription": "Generated POV videos",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "User Input",
+              "placeholder": "You woke up and saw Jesus Christ visiting your city in the year 33 CE.",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "30570ddf-b3c7-4a1c-b5ac-5aa3cb5e273c",
+      "name": "On form submission",
+      "webhookId": "[CONFIGURAR NO N8N]"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        800,
+        0
+      ],
+      "id": "700271bf-cb27-44cf-86f7-92d4ebb3b267",
+      "name": "Extract from File",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "[URL_REMOVIDA]",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"promptImage\": \"data:image/jpeg;base64,{{ $json.data }}\",\n  \"model\": \"gen3a_turbo\",\n  \"promptText\": \" {{ $('Create FLUX Image').item.json.message.content.prompt }}\",\n  \"duration\": 5,\n  \"ratio\": \"768:1280\",\n  \"watermark\": false\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1020,
+        0
+      ],
+      "id": "ab2acc5d-8909-4bf8-bd54-e7f0bfbea722",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "[URL_REMOVIDA]",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "inputs",
+              "value": "={{ $json.message.content.prompt }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        580,
+        0
+      ],
+      "id": "a8c87506-c29f-4b93-887b-ea0eb2e378eb",
+      "name": "Create FLUX Image"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=🎥 First-Person POV Image & Video Prompt Generator (Single Input → Unified Output)\n\n📌 Task:\nYou are an advanced AI specializing in transforming a short user-provided description into a hyper-realistic, cinematic first-person POV prompt. This single prompt is optimized for both text-to-image and text-to-video AI models such as Flux, MidJourney, Stable Diffusion, Runway Gen-3 Alpha, and Pika Labs.\n\n📌 The final output must be a single, AI-ready paragraph that:\n✔ Strictly adheres to first-person POV, ensuring immersion.\n✔ Begins with the image description and smoothly transitions into background animation details for video.\n✔ Includes visible limbs interacting with the environment.\n✔ Describes textures, lighting, sensory details, and environmental motion.\n✔ Follows structured formatting for AI consistency.\n✔ Stays under 950 characters.\n\nHere is the short user-provided description: {{ $json['User Input'] }}\n\n🔹 POV Rules & Guidelines for Generating Prompts\n✅ First-Person Perspective Only\n\nThe viewer must feel like they are experiencing the moment firsthand.\nThe framing should mimic a GoPro-style immersive shot, with depth, interaction, and motion.\n✅ Visible Limbs for Immersion\n\nA hand, foot, or both must be visible in the foreground, actively engaging with the environment.\nThe limbs should be gripping, touching, moving, reacting—interacting with the world naturally.\n✅ World Interaction\n\nThe body should physically interact with objects (e.g., holding a shield in battle, adjusting a gas mask, gripping reins on horseback).\nThe world must feel alive and reactive to the viewer’s presence.\n✅ Sensory & Cinematic Detail\n\nThe scene should engage multiple senses:\nSight (lighting, colors, scale)\nTouch (heat, cold, textures)\nSound (distant echoes, wind howling, gunfire)\nSmell (burning wood, fresh rain, damp earth)\nInclude weather effects, motion, environmental conditions, and emotional weight (e.g., fear, awe, adrenaline, nostalgia).\n✅ Structured Formatting\n1️⃣ Foreground (POV Interaction - Image Focus): Start with \"First-person view POV GoPro shot of [describe hands/feet and their action]...\"\n2️⃣ Background (Scene & Environment - Video Focus): Transition into \"In the background, [describe scenery, lighting, animated environmental effects]...\"\n\n🔹 User Input (Single Prompt Field Example)\nExample Input: POV: You’re a knight in battle\n📌 AI-Generated Output (Example for “POV: You’re a Knight in Battle”)\nPOV: You’re a Knight in Battle\nFirst-person view POV GoPro shot of my gauntleted hands gripping the hilt of a longsword, the steel gleaming under the afternoon sun. Blood and mud splatter my armor as I brace for the enemy’s charge. My heartbeat pounds in my ears, my grip tightening as I prepare to strike. In the background, banners of rival kingdoms whip violently in the wind, soldiers locked in brutal combat. Arrows streak through the sky, their deadly tips glinting as they plunge into the earth. A warhorse rears nearby, its rider knocked from the saddle, the ground trembling beneath the weight of battle. Smoke billows from burning wooden carts, embers swirling through the air. The sky darkens as storm clouds gather, distant war horns blaring through the chaos. The scent of iron and sweat clings to the battlefield, a mix of fear and adrenaline surging through my veins. A warrior lunges—my blade meets his, sparks flying as the battle rages on.\n\n📌 AI-Generated Output (Example for “POV: You Wake Up as Cleopatra in Ancient Egypt”)\nPOV: You Wake Up as Cleopatra in Ancient Egypt\nFirst-person view POV GoPro shot of my elegant hands delicately adjusting a bejeweled golden collar, turquoise gemstones catching the warm glow of candlelight. My silk robe shimmers as I lift a goblet of wine, the cool metal pressing against my fingertips. The scent of lotus flowers drifts through the air, mixing with the smoky perfume of burning myrrh. In the background, towering marble pillars adorned with gold leaf glisten under flickering torches. Servants in flowing linen robes move gracefully, their hushed whispers blending with the soft trickle of a nearby fountain. The palace’s stained-glass windows cast colorful patterns onto the polished limestone floor, shifting as the breeze stirs the silk curtains. Beyond the open balcony, the Nile glistens beneath the moonlight, feluccas drifting along its surface. A tame leopard lounges beside my throne, its tail flicking lazily. A distant drum beats—a call for my presence in the royal court.\n\n📌 AI-Generated Output (Example for “POV: You’re a Viking at Sea”)\nPOV: You’re a Viking at Sea\nFirst-person view POV GoPro shot of my calloused hands gripping the rough wooden oar, veins straining as I pull through the churning icy waters. The cold wind bites against my exposed skin, my breath visible in the frigid air. The salt spray stings my face as waves crash against the longship, the hull creaking under the force of the tide. In the background, my fellow warriors row in sync, their fur-lined cloaks whipping in the wind, their voices roaring in a war chant. A sea serpent figurehead looms over the bow, cutting through the dense morning mist. The dark clouds overhead threaten an incoming storm, lightning flashing in the distance. Seagulls cry out, circling above as if warning of what lies ahead. The scent of wet wood, brine, and sweat mixes in the air as the ship heaves forward, the distant shoreline emerging on the horizon—our next raid awaits.\n\n📌 AI-Generated Output (Example for “POV: You’re a Soldier in the Trenches of World War I”)\nPOV: You’re a Soldier in the Trenches of World War I\nFirst-person view POV GoPro shot of my dirt-covered hands gripping a bolt-action rifle, my breath fogging against the freezing air. My uniform is soaked in mud, the damp fabric clinging to my skin. The wooden trench walls loom beside me, reinforced with sandbags, slick with rain. In the background, artillery shells streak through the night sky, their explosions illuminating the battlefield in violent flashes. The ground trembles with each impact, shaking loose debris from above. Barbed wire stretches across no man’s land, barely visible through the rolling fog. A comrade beside me fumbles for his cigarette, his fingers shaking as he lights a match. Machine gun fire rattles in the distance, muffled by the pounding rain. The acrid scent of gunpowder and rotting wood hangs in the air. A whistle pierces through the chaos—the signal to charge. My heart pounds as I hoist my rifle, the camera tilting upward toward the hellscape beyond the trench walls.\n\nFINAL REMINDER:\n\n- Output MUST be less than 950 characters \n- Output MUST be one json:\n    { \"prompt\": \"Generated text output here...\" }"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        220,
+        0
+      ],
+      "id": "73a0ca3a-3528-44e8-8bd9-8dac78782083",
+      "name": "Generated Prompt"
+    },
+    {
+      "parameters": {
+        "amount": 40
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1240,
+        0
+      ],
+      "id": "3dad06c9-c346-469e-ae8c-b489bf0b827f",
+      "name": "Wait",
+      "webhookId": "[CONFIGURAR NO N8N]"
+    },
+    {
+      "parameters": {
+        "url": "=[URL_REMOVIDA] $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer key_74113f44783a4606d7d96a0c0b1ab1ff558f24fee2b8c92ffdf7e6bf942cfb1f32654922bf17a26fc17e77dc3e4eac746bee1d583ceb3b93fce1171b3190de4a"
+            },
+            {
+              "name": "X-Runway-Version",
+              "value": "[DADO_REMOVIDO]"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1460,
+        0
+      ],
+      "id": "a9707135-cf91-43a6-8922-78ac66bd97a6",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1B11VvFfmSRAF7dKWAtt59kSTfcGQ5Vn7qkKWXMYlXJE",
+          "mode": "list",
+          "cachedResultName": "Videos POV",
+          "cachedResultUrl": "[URL_REMOVIDA]"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "[URL_REMOVIDA]"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "status": "={{ $json.status }}",
+            "output": "={{ $json.output[0] }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "createdAt",
+              "displayName": "createdAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "output",
+              "displayName": "output",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1700,
+        140
+      ],
+      "id": "fdb6f124-b7d1-400c-bd7b-e1855a24ad19",
+      "name": "Google Sheets"
+    },
+    {
+      "parameters": {
+        "sendTo": "[EMAIL_REMOVIDO]",
+        "subject": "POV Criado com Sucesso!",
+        "message": "Seu POV foi criado com sucesso!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1700,
+        -160
+      ],
+      "id": "9f6d8490-878b-461a-a7d4-a2b94f70d2fa",
+      "name": "Gmail",
+      "webhookId": "[CONFIGURAR NO N8N]"
+    }
+  ],
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Generated Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create FLUX Image": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generated Prompt": {
+      "main": [
+        [
+          {
+            "node": "Create FLUX Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "ec188f3f-d1c3-4c1c-98b9-23af8a3a437b",
+  "id": "HkXB5UXRFOdcxXPS",
+  "tags": []
+}

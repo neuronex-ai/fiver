@@ -1,0 +1,12 @@
+# Clínica Ressignificar — política de rastreamento
+User-agent: OAI-SearchBot
+Allow: /
+
+# Pesquisa pública liberada; treinamento OpenAI separado por opção.
+User-agent: GPTBot
+Disallow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://ressignificar.example/sitemap.xml

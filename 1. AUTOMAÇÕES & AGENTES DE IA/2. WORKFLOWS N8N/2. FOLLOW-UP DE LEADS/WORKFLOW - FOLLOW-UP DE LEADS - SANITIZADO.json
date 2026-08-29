@@ -1,0 +1,524 @@
+{
+  "name": "envio msg",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1qNJUenmaQQoj9CYBgdaHSwxG_0CxYYHEsb6ZlDp8JbU",
+          "mode": "list",
+          "cachedResultName": "LISTA SANDRA PT1",
+          "cachedResultUrl": "[URL_REMOVIDA]"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1777556294,
+          "mode": "list",
+          "cachedResultName": "USADOS",
+          "cachedResultUrl": "[URL_REMOVIDA]"
+        },
+        "options": {}
+      },
+      "id": "a811aea9-ed4f-490a-96f8-44913b6e6ea1",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -1080,
+        40
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "1qNJUenmaQQoj9CYBgdaHSwxG_0CxYYHEsb6ZlDp8JbU",
+          "mode": "list",
+          "cachedResultName": "LISTA SANDRA PT1",
+          "cachedResultUrl": "[URL_REMOVIDA]"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1777556294,
+          "mode": "list",
+          "cachedResultName": "USADOS",
+          "cachedResultUrl": "[URL_REMOVIDA]"
+        }
+      },
+      "id": "e4722cc7-cd5c-4b[DADO_REMOVIDO]fad6bcea03",
+      "name": "Google Sheets1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        840,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.sessionId }}",
+        "contextWindowLength": 100
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        500,
+        320
+      ],
+      "id": "99611efc-4bbd-42e3-a95d-85dfb667d091",
+      "name": "Postgres Chat Memory2"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "dados_cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefone",
+              "keyValue": "={{ $json['Phone Number \t\t\t'] }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -380,
+        40
+      ],
+      "id": "1b3b6d30-f5be-4c13-af0d-da80e0dc79b1",
+      "name": "Supabase5",
+      "alwaysOutputData": true,
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4a6d9aac-8565-4c58-abe3-8741393a5535",
+              "leftValue": "={{ $json.telefone }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -160,
+        40
+      ],
+      "id": "01e4eb93-f93d-41ca-b155-cf25785a62f7",
+      "name": "If9"
+    },
+    {
+      "parameters": {
+        "action": "generate"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        -20,
+        180
+      ],
+      "id": "657f5b09-3b2a-48b7-a978-8a2dc718fbdc",
+      "name": "Gerar sessionID1"
+    },
+    {
+      "parameters": {
+        "tableId": "dados_cliente",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "sessionid",
+              "fieldValue": "={{ $json.data }}"
+            },
+            {
+              "fieldId": "telefone",
+              "fieldValue": "={{ $json['Phone Number \t\t\t'] }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        160,
+        180
+      ],
+      "id": "9dd26884-5cc7-4288-9d58-f08cbc19d491",
+      "name": "Supabase6"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtém os valores dos nós anteriores\nconst sessionid1 = $input.item.json.data;  // Do nó \"Gerar sessionID\"\nconst sessionid2 = $input.item.json.sessionid;  // Do nó \"Supabase\"\n\n// Retorna apenas o que existir, chamando sempre de \"sessionId\"\nreturn [{ sessionId: sessionid1 || sessionid2 || null }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        0
+      ],
+      "id": "46f03179-bf91-43aa-82cd-52c0d926ee9c",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "dados_cliente",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telefone",
+              "keyValue": "={{ $json['Phone Number \t\t\t'] }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "df0d2a7a-4593-47a1-901b-bc1f1032a612",
+      "name": "Get Dados1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "link_test_whatsapp",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -740,
+        40
+      ],
+      "id": "176afe46-ffb7-4fc1-ba98-82f37ea11f7d",
+      "name": "Split Out",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6d2854de-1eab-46f1-945c-c872b4e212c5",
+              "name": "Phone Number \t\t\t",
+              "value": "={{ (() => { \n    const matches = $json.link_test_whatsapp.match(/phone=(\\d+)/);\n    return matches ? matches[1] : '';\n})() }}@s.whatsapp.net",
+              "type": "string"
+            },
+            {
+              "id": "94a4147a-782e-4810-a3e5-8681bf74ea8b",
+              "name": "Nome da empresa",
+              "value": "={{ $json.razao_social }}",
+              "type": "string"
+            },
+            {
+              "id": "6ef7de47-1caf-[DADO_REMOVIDO]b33fb16db58",
+              "name": "Nome da pessoa",
+              "value": "={{ $json.socios.split(' ')[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -560,
+        40
+      ],
+      "id": "d3f2df9a-b415-4ccc-b3b7-42fed50fe6a1",
+      "name": "Mapear Lead"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "id": "60c4d5c5-3dae-4989-b21a-789e3866c2d0",
+      "name": "Wait4",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -900,
+        40
+      ],
+      "webhookId": "[CONFIGURAR NO N8N]"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "id": "c48e1ee4-e877-4050-acb9-5e68c328b732",
+      "name": "Schedule Trigger3",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1260,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "BRENO AULAS",
+        "remoteJid": "=+{{ $('Mapear Lead').item.json['Phone Number \t\t\t'].split('@')[0] }}\n",
+        "messageText": "={{ $json.output }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        680,
+        0
+      ],
+      "id": "59fe791d-9e43-473b-b002-7ccc264147da",
+      "name": "Evolution API4",
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Mensagens a serem enviadas sem dicas de uso somente a mensagem que será enviada, escolha uma das 3: Olá {{ $('Mapear Lead').item.json['Nome da pessoa'] }} tudo bem?,Olá {{ $('Mapear Lead').item.json['Nome da pessoa'] }} como vai?, olá {{ $('Mapear Lead').item.json['Nome da pessoa'] }} está podendo falar? ",
+        "options": {
+          "systemMessage": "=Me da a resposta sem dicas de uso ou textos adicionais"
+        }
+      },
+      "id": "d446c43e-d0d6-4655-aaf8-a55ca574cb62",
+      "name": "Atendente4",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        320,
+        0
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        340,
+        280
+      ],
+      "id": "da8665de-358e-440a-933c-f758b33d64a6",
+      "name": "OpenAI Chat Model8"
+    }
+  ],
+  "connections": {
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "Atendente4",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase5": {
+      "main": [
+        [
+          {
+            "node": "If9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If9": {
+      "main": [
+        [
+          {
+            "node": "Get Dados1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gerar sessionID1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar sessionID1": {
+      "main": [
+        [
+          {
+            "node": "Supabase6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase6": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Atendente4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Dados1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Mapear Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mapear Lead": {
+      "main": [
+        [
+          {
+            "node": "Supabase5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger3": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution API4": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atendente4": {
+      "main": [
+        [
+          {
+            "node": "Evolution API4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model8": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Atendente4",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2c1ec9f0-936a-4cff-8864-f223c4e30988",
+  "id": "Xiqw0oy8GVidRFuf",
+  "tags": []
+}

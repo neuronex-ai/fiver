@@ -1,0 +1,31 @@
+{
+  "name": "ressignificar-landing-site",
+  "private": true,
+  "version": "0.2.1",
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/generate-static-seo.mjs public",
+    "dev": "vite",
+    "prebuild": "node scripts/generate-static-seo.mjs public",
+    "build": "node scripts/build.mjs",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --pretty",
+    "seo:generate": "node scripts/generate-static-seo.mjs public",
+    "seo:indexnow": "node scripts/indexnow-submit.mjs"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.0.4",
+    "typescript": "^7.0.0",
+    "vite": "^8.1.0"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}
