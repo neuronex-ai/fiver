@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import {
   ArrowUpRight,
   Building2,
@@ -247,6 +247,19 @@ function CommercialFooter({ language }: { language: Language }) {
 
 export default function SalesLayer() {
   const language = usePageLanguage();
+
+  useEffect(() => {
+    const syncIdentity = () => {
+      document.title = document.title.replace("Jhonatan Oliveira", "Jhonatan Gasperi");
+      const headerName = document.querySelector<HTMLElement>(".site-header > .wordmark > span:last-child");
+      if (headerName) headerName.textContent = "Jhonatan Gasperi";
+    };
+
+    syncIdentity();
+    const frame = window.requestAnimationFrame(syncIdentity);
+    return () => window.cancelAnimationFrame(frame);
+  }, [language]);
+
   return (
     <>
       <PersonalSection language={language} />
