@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { ArrowRight, LayoutTemplate, Megaphone, Route, Rows3 } from "lucide-react";
+import { ArrowRight, Layers3, LayoutTemplate, Megaphone, Route } from "lucide-react";
 
 type Language = "en" | "pt";
 
@@ -66,7 +66,7 @@ export default function A3Evidence() {
     <section className="a3-proof" aria-label={t.eyebrow}>
       <div className="a3-proof-head">
         <div>
-          <span className="a3-proof-eyebrow"><Rows3 size={13} />{t.eyebrow}</span>
+          <span className="a3-proof-eyebrow"><Layers3 size={13} />{t.eyebrow}</span>
           <h5>{t.title}</h5>
           <p>{t.body}</p>
         </div>
