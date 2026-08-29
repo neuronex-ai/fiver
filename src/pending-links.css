@@ -1,0 +1,23 @@
+/* Honest pre-launch states: disappear automatically when Fiverr URLs are configured. */
+.service-link[data-needs-setup="true"],
+.final-actions a[data-needs-setup="true"] {
+  font-size: 0;
+}
+.service-link[data-needs-setup="true"]::before {
+  content: "Fiverr soon · contact directly";
+  font-size: 11px;
+}
+.final-actions a[data-needs-setup="true"]::before {
+  content: "Fiverr coming soon · contact directly";
+  font-size: 12px;
+}
+.service-link[data-needs-setup="true"] svg,
+.final-actions a[data-needs-setup="true"] svg {
+  display: none;
+}
+html[lang="pt-BR"] .service-link[data-needs-setup="true"]::before {
+  content: "Fiverr em breve · falar direto";
+}
+html[lang="pt-BR"] .final-actions a[data-needs-setup="true"]::before {
+  content: "Fiverr em breve · falar direto";
+}
