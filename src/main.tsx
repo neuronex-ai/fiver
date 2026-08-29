@@ -4,6 +4,7 @@ import App from "./App";
 import SalesLayer from "./SalesLayer";
 import "./styles.css";
 import "./sales.css";
+import "./pending-links.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
