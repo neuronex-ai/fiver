@@ -12,8 +12,8 @@
   color: #5f605d;
 }
 html[lang="pt-BR"] .hero-copy::before { content: "JHONATAN GASPERI · BRASIL → MUNDO"; }
-.wordmark > span:last-child { font-size: 0; }
-.wordmark > span:last-child::after { content: "Jhonatan Gasperi"; font-size: 13px; }
+.site-header > .wordmark > span:last-child { font-size: 0; }
+.site-header > .wordmark > span:last-child::after { content: "Jhonatan Gasperi"; font-size: 13px; }
 
 /* Stronger glass legibility. */
 .site-header,
@@ -70,6 +70,8 @@ html[lang="pt-BR"] .hero-copy::before { content: "JHONATAN GASPERI · BRASIL →
 .mobile-menu { background: rgba(12,12,12,.42); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
 .mobile-menu-panel { background: rgba(248,248,245,.965); max-height: calc(100vh - 32px); overflow-y: auto; }
 .mobile-menu-link { min-height: 60px; }
+.mobile-menu-panel .wordmark > .wordmark-mark { display: grid !important; font-size: 13px !important; }
+.mobile-menu-panel .wordmark > .wordmark-mark::after { content: none !important; }
 
 /* Personal section */
 .personal-section { padding: 132px 0 126px; background: #f2f2ef; border-top: 1px solid rgba(20,20,20,.08); }
@@ -153,8 +155,8 @@ html[lang="pt-BR"] .hero-copy::before { content: "JHONATAN GASPERI · BRASIL →
 
 @media (max-width: 820px) {
   .hero-copy::before { margin-top: 2px; font-size: 9px; }
-  .wordmark > span:last-child::after { display: none; }
-  .mobile-menu-panel .wordmark > span:last-child::after { display: inline; }
+  .site-header > .wordmark > span:last-child::after { display: none; }
+  .mobile-menu-panel .wordmark > .wordmark-mark { display: grid !important; }
 
   /* Keep screenshots readable instead of shrinking an entire desktop UI into a postage stamp. */
   .hero-device .device-canvas { aspect-ratio: 16 / 10.5; }
